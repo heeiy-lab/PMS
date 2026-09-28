@@ -3,62 +3,28 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class GroqService {
-  // 🔑 MASUKKAN API KEY GROQ KAMU DI SINI
-  static const String _apiKey = '';
-  static const String _baseUrl =
-      'https://api.groq.com/openai/v1/chat/completions';
+  // Sekarang panggil server backend lokal, bukan api.groq.com langsung
+  static const String _backendUrl = 'http://localhost:3000/api/chat';
 
   Future<String> fetchEducationTips(String topic) async {
-    if (_apiKey.isEmpty || _apiKey.contains('PASTE_API_KEY')) {
-      throw Exception('API Key Groq belum diisi di groq_service.dart');
-    }
-
-    final prompt =
-        '''
-Bertindaklah sebagai seorang dokter spesialis kandungan dan ahli kesehatan wanita yang ramah.
-Berikan informasi edukasi, tips praktis, dan penjelasan singkat berbahasa Indonesia mengenai topik: "$topic".
-Format jawaban dengan rapi menggunakan poin-poin penting (bullet points) agar mudah dibaca oleh wanita yang sedang mengalami PMS. Buat isinya menenangkan dan solutif.
-''';
-
     try {
       final response = await http.post(
-        Uri.parse(_baseUrl),
+        Uri.parse(_backendUrl),
         headers: {
-          'Authorization': 'Bearer $_apiKey',
           'Content-Type': 'application/json',
+          // Perhatikan: Tidak ada lagi Header 'Authorization' / API Key di sini!
         },
-        body: jsonEncode({
-          'model': 'openai/gpt-oss-120b',
-          'messages': [
-            {
-              'role': 'system',
-              'content': 'Anda adalah edukator kesehatan wanita yang ramah. Berikan informasi umum, bukan diagnosis medis.',
-            },
-            {'role': 'user', 'content': prompt},
-          ],
-          'temperature': 0.7,
-          'max_tokens': 500,
-        }),
+        body: jsonEncode({'topic': topic}),
       );
 
-      if (response.statusCode >= 200 && response.statusCode < 300) {
+      if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final content = data['choices']?[0]?['message']?['content'];
-
-        if (content != null && content.toString().trim().isNotEmpty) {
-          return content.toString().trim();
-        } else {
-          throw Exception('Respons AI kosong.');
-        }
+        return data['reply'] ?? 'Respons AI kosong.';
       } else {
-        final errorData = jsonDecode(response.body);
-        final errorMessage = errorData['error']?['message'] ?? response.body;
-        throw Exception(
-          'Gagal menghubungi AI (Error ${response.statusCode}): $errorMessage',
-        );
+        throw Exception('Gagal terhubung ke backend proxy.');
       }
     } catch (e) {
-      throw Exception(e.toString());
+      throw Exception('Terjadi kesalahan: $e');
     }
   }
 }

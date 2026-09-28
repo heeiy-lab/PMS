@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'screens/login_screen.dart'; // Ubah ke login screen
+import 'screens/login_screen.dart';
 import 'theme/app_colors.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const PeriodTrackerApp());
 }
 
@@ -20,7 +22,7 @@ class PeriodTrackerApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.background,
         fontFamily: 'Roboto',
       ),
-      home: const LoginScreen(), // <-- Set ke LoginScreen
+      home: const LoginScreen(),
     );
   }
 }

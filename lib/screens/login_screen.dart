@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
                 const Text(
-                  'Selamat Datang',
+                  'Welcome back, bestie',
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -100,11 +100,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 const Text(
-                  'Pantau siklus haid dan kesehatan tubuhmu dengan mudah.',
+                  'Let’s keep your cycle cute and consistent.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, color: AppColors.textLight),
+                  style: TextStyle(
+                    fontSize: 14,
+                    height: 1.4,
+                    color: AppColors.textLight,
+                  ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 32),
                 // Input Username
                 TextField(
                   controller: _usernameController,
@@ -121,6 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide.none,
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryPink,
+                        width: 1.2,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -128,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
-                    labelText: 'Kata Sandi',
+                    labelText: 'Password',
                     prefixIcon: const Icon(
                       Icons.lock_outline,
                       size: 20,
@@ -140,9 +151,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide.none,
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(
+                        color: AppColors.primaryPink,
+                        width: 1.2,
+                      ),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
                   height: 54,
@@ -152,11 +170,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: AppColors.primaryPink,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: const Text(
-                      'Masuk',
+                      'Log in',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -170,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Belum punya akun? ',
+                      'No account yet? ',
                       style: TextStyle(color: AppColors.textLight),
                     ),
                     GestureDetector(
@@ -183,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                       child: const Text(
-                        'Daftar',
+                        'Join now',
                         style: TextStyle(
                           color: AppColors.primaryPink,
                           fontWeight: FontWeight.bold,
